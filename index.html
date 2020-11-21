@@ -2,6 +2,11 @@
 <meta charset="utf-8">
 <style>
 
+  /* 
+  Author: Josh Spicer <hello@joshspicer.com>
+  Credit to https://github.com/justincy/d3-pedigree-examples for initial template. 
+  */
+
 body {
   text-align: center;
 }
@@ -22,6 +27,11 @@ svg {
   cursor: pointer;
 }
 
+.personName {
+  font: 16px bold;
+  cursor: pointer;
+}
+
 .link {
   fill: none;
   stroke: #ccc;
@@ -36,7 +46,7 @@ svg {
 var data;
 
 var boxWidth = 150,
-    boxHeight = 40;
+    boxHeight = 80;
 
 // Setup zoom and pan
 var zoom = d3.behavior.zoom()
@@ -64,7 +74,7 @@ var tree = d3.layout.tree()
   // the size parameter instead then d3 would
   // calculate the separation dynamically to fill
   // the available space.
-  .nodeSize([100, 200])
+  .nodeSize([200, 200])
   
   // By default, cousins are drawn further apart than siblings.
   // By returning the same value in all cases, we draw cousins
@@ -88,22 +98,47 @@ var tree = d3.layout.tree()
 
 d3.json('data/spicer.json', function(error, json){
   
-  if(error) {
-    return console.error(error);
-  }
+  // Fallback
+  if (error) {
+    console.error("Primary data is not defined.  Showing Example...");
+    d3.json('data/example.json', function(error2, json2) {
+        if (error2) {
+          // Not even the example is working.
+          return console.error(error2);
+        }
+        data = json2;
+        draw ();
+      });
+      return;
+    }
   
   // Start with only the first few generations showing
-  // json._parents.forEach(function(gen2){
-  //   gen2._parents.forEach(function(gen3){
-  //     collapse(gen3);
-  //   });
-  // });
-  
+    // json._parents.forEach(function(gen2){
+    //   gen2._parents.forEach(function(gen3){
+    //     collapse(gen3);
+    //   });
+    // });
+
+  console.log("Rendering normally.")
   data = json;
-  
   draw();
       
 });
+
+function addData (nodeEnter, yPos, param, prefix, attrs={}) {
+  nodeEnter.append("text")
+      .attr("dx", -(boxWidth/2) + 10)
+      .attr("dy", yPos)
+      .attr("text-anchor", "start")
+      .attr('class', 'name')
+      .text(function(d) { 
+
+        if (d[param] == undefined)
+          return;
+
+        return `${prefix}${d[param]}` ; 
+      });
+}
 
 function draw(){
   
@@ -134,14 +169,18 @@ function draw(){
       });
 
   // Draw the person's name and position it inside the box
-  nodeEnter.append("text")
-      .attr("dx", -(boxWidth/2) + 10)
-      .attr("dy", 0)
-      .attr("text-anchor", "start")
-      .attr('class', 'name')
-      .text(function(d) { 
-        return d.name; 
-      });
+  // Also draw other data.
+  addData(nodeEnter, 0, "name", "")
+  addData(nodeEnter, 20, "birth", "b. ", {"class": "personName"})
+
+  // nodeEnter.append("text")
+  //     .attr("dx", -(boxWidth/2) + 10)
+  //     .attr("dy", 15)
+  //     .attr("text-anchor", "start")
+  //     .attr('class', 'name')
+  //     .text(function(d) { 
+  //       return `b. ${d.birth}` ; 
+  //     });
   
   // Update the position of both old and new nodes
   node.attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });
