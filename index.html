@@ -18,7 +18,7 @@ svg {
 
 .person rect {
   fill: #fff;
-  stroke: steelblue;
+  stroke: black;
   stroke-width: 1px;
 }
 
@@ -184,7 +184,9 @@ function draw(){
         y: -(boxHeight/2),
         width: boxWidth,
         height: boxHeight
-      });
+      })
+      .style("fill", function(d) { return d.gender == "male" ? "teal" : "orange"})
+      .style("opacity", ".3");
 
   // Draw the person's name and position it inside the box
   // Also draw other data.
