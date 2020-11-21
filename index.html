@@ -46,7 +46,7 @@ svg {
 var data;
 
 var boxWidth = 150,
-    boxHeight = 80;
+    boxHeight = 100;
 
 // Setup zoom and pan
 var zoom = d3.behavior.zoom()
@@ -59,7 +59,7 @@ var zoom = d3.behavior.zoom()
 
 var svg = d3.select("body").append("svg")
   .attr('width', 1000)
-  .attr('height', 500)
+  .attr('height', 800)
   .call(zoom)
   .append('g')
   
@@ -74,7 +74,7 @@ var tree = d3.layout.tree()
   // the size parameter instead then d3 would
   // calculate the separation dynamically to fill
   // the available space.
-  .nodeSize([200, 200])
+  .nodeSize([250, 200])
   
   // By default, cousins are drawn further apart than siblings.
   // By returning the same value in all cases, we draw cousins
@@ -140,6 +140,19 @@ function addData (nodeEnter, yPos, param, prefix, attrs={}) {
       });
 }
 
+const getCircularReplacer = () => {
+  const seen = new WeakSet();
+  return (key, value) => {
+    if (typeof value === "object" && value !== null) {
+      if (seen.has(value)) {
+        return;
+      }
+      seen.add(value);
+    }
+    return value;
+  };
+};
+
 function draw(){
   
   var nodes = tree.nodes(data),
@@ -157,7 +170,8 @@ function draw(){
   // Add any new nodes
   var nodeEnter = node.enter().append("g")
       .attr("class", "person")
-      .on('click', togglePerson);
+      // .on('click', togglePerson);
+      .on('click', displayDetails)
 
   // Draw the rectangle person boxes
   nodeEnter.append("rect")
@@ -170,8 +184,10 @@ function draw(){
 
   // Draw the person's name and position it inside the box
   // Also draw other data.
-  addData(nodeEnter, 0, "name", "")
-  addData(nodeEnter, 20, "birth", "b. ", {"class": "personName"})
+  addData(nodeEnter, -23, "name", "")
+  addData(nodeEnter, 20, "birth", "b. ")
+  addData(nodeEnter, 40, "death", "d.  ")
+
 
   // nodeEnter.append("text")
   //     .attr("dx", -(boxWidth/2) + 10)
@@ -219,6 +235,10 @@ function togglePerson(person){
     collapse(person);
   }
   draw();
+}
+
+function displayDetails (person) {
+  document.cookie = `person=${JSON.stringify(person, getCircularReplacer)}`
 }
 
 /**
