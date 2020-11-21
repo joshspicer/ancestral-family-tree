@@ -170,7 +170,11 @@ function draw(){
   // Add any new nodes
   var nodeEnter = node.enter().append("g")
       .attr("class", "person")
-      // .on('click', togglePerson)
+      .on("contextmenu", function (d, i) {
+            d3.event.preventDefault();
+            togglePerson(d);
+           // react on right-clicking
+        })
       .on('dblclick', displayDetails)
 
   // Draw the rectangle person boxes
@@ -187,16 +191,6 @@ function draw(){
   addData(nodeEnter, -23, "name", "")
   addData(nodeEnter, 20, "birth", "b. ")
   addData(nodeEnter, 40, "death", "d.  ")
-
-
-  // nodeEnter.append("text")
-  //     .attr("dx", -(boxWidth/2) + 10)
-  //     .attr("dy", 15)
-  //     .attr("text-anchor", "start")
-  //     .attr('class', 'name')
-  //     .text(function(d) { 
-  //       return `b. ${d.birth}` ; 
-  //     });
   
   // Update the position of both old and new nodes
   node.attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });
@@ -223,7 +217,7 @@ function draw(){
   
   // Update the links positions (old and new)
   link.attr("d", elbow)
-    .on("mouseover", function(d) {console.log(d)} );
+    
 }
 
 /**

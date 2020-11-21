@@ -34,9 +34,15 @@
             <span id="NAT"></span>
             <span id="NLOC"></span>
         </p>
+        
+        <br>
 
-        <h2>Docs</h2>
             <span id="DOCS"></span>
+
+        <br>
+
+         <span id="MARRIAGE"></span>
+         
 
     </div>
 
@@ -45,28 +51,64 @@
 
     <script>
         var person = null;
-        function parseCookie () {
-            var split = document.cookie.split("=");
-            person = JSON.parse(split[1]);
-        }
-        function buildUI () {
-            document.getElementById("NAME").innerHTML =  person.name ?? "🚨 Error 🚨";
-            
-            document.getElementById("BIRTH").innerHTML =  person.birth ? `🎂 ${person.birth}`: "";
-            document.getElementById("BLOC").innerHTML =  person.bloc ? `${person.bloc}`: "";
+            function parseCookie () {
+                var split = document.cookie.split("=");
+                person = JSON.parse(split[1]);
+            }
+            function buildUI () {
+                document.getElementById("NAME").innerHTML =  person.name ?? "🚨 Error 🚨";
+                
+                document.getElementById("BIRTH").innerHTML =  person.birth ? `🎂 ${person.birth}`: "";
+                document.getElementById("BLOC").innerHTML =  person.bloc ? `${person.bloc}`: "";
 
-            document.getElementById("DEATH").innerHTML =  person.death ? `🪦 ${person.death}`: "";
-            document.getElementById("DLOC").innerHTML =  person.dloc ? `${person.dloc}`: "";
+                document.getElementById("DEATH").innerHTML =  person.death ? `🪦 ${person.death}`: "";
+                document.getElementById("DLOC").innerHTML =  person.dloc ? `${person.dloc}`: "";
 
 
-            document.getElementById("NAT").innerHTML =  person.nat ? `🇺🇸 ${person.nat}`: "";
-            document.getElementById("NLOC").innerHTML =  person.nloc ? `${person.nloc}`: "";
+                document.getElementById("NAT").innerHTML =  person.nat ? `🇺🇸 ${person.nat}`: "";
+                document.getElementById("NLOC").innerHTML =  person.nloc ? `${person.nloc}`: "";
 
-            // Render the PDF with Docs saved.
-            document.getElementById("DOCS").innerHTML = `            <object data="./docs/${person.id}.pdf" type="application/pdf" width="1000" height="1000">
-                <embed src="./docs/${person.id}.pdf" type="application/pdf"/>
-            </object>`
-        }
+                // Render the personal PDF
+                document.getElementById("DOCS").innerHTML = `    
+                <h2>Personal Docs</h2>        
+                <object data="./docs/${person.id}.pdf" type="application/pdf" width="1000" height="1000">
+                    <embed src="./docs/${person.id}.pdf" type="application/pdf"/>
+                </object>`
+
+                try {
+                    var maybeSpouse =  "";
+                    var marriage = "";
+                    person.parent._parents.forEach(element => {
+                        if (element != null) {
+                            maybeSpouse = element.id;
+                        }
+                    });
+
+                    console.log(maybeSpouse)
+
+                    if (maybeSpouse == null || maybeSpouse == "" ) {
+                        throw "No Spouse";
+                    }
+
+                    if (person.gender === "male") {
+                        marriage = `${maybeSpouse}${person.id}`;
+                    } else {
+                        marriage = `${person.id}${maybeSpouse}`;
+                    }
+
+                    console.log(marriage);
+
+                    // Render the Marriage PDF 
+                    document.getElementById("MARRIAGE").innerHTML = `       
+                    <h2>Marriage Docs</h2>             
+                    <object data="./docs/${marriage}.pdf" type="application/pdf" width="1000" height="1000">
+                        <embed src="./docs/${marriage}.pdf" type="application/pdf"/>
+                    </object>`
+                    } catch(err) {
+                        console.log("No spouse assigned.")
+                        // do nothing. 
+                    }
+            }
 
         parseCookie ();
         console.log (person);
