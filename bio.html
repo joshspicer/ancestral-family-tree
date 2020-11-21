@@ -10,6 +10,11 @@
 
     <title>Details</title>
   </head>
+  <style>
+      .icon {
+          font-size: x-large;
+      }
+  </style>
   <body>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -17,31 +22,37 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   
-    <div class=container>
+    <div class=container style="margin-top: 15px">
         <h1 id="NAME"></h1>
-        
-        <p>
-        <span id="BIRTH"></span>
-        <span id="BLOC"></span>
-        </p>
 
-        <p>
-            <span id="DEATH"></span>
-            <span id="DLOC"></span>
-        </p>
+        <span id="OVERVIEW"></span>
 
-        <p>
-            <span id="NAT"></span>
-            <span id="NLOC"></span>
-        </p>
-        
+        <h2>Demographics</h2>  
+
+        <ul class="list-group">
+              <li id="1" class="list-group-item">
+                <span class="icon">🎂</span>  
+                <span id="BIRTH"></span><br>
+                <span id="BLOC"></span>
+              </li>
+
+            <li id="2" class="list-group-item">
+                <span class="icon">🪦</span>  
+                <span id="DEATH"></span><br>
+                <span id="DLOC"></span>
+            </li>
+
+            <li id="3" class="list-group-item">
+                <span class="icon">🇺🇸</span>  
+                <span id="NAT"></span><br>
+                <span id="NLOC"></span>
+            </li>       
+        </ul>
         <br>
+            
+        <span id="DOCS"></span>
 
-            <span id="DOCS"></span>
-
-        <br>
-
-         <span id="MARRIAGE"></span>
+        <span id="MARRIAGE"></span>
          
 
     </div>
@@ -56,16 +67,30 @@
                 person = JSON.parse(split[1]);
             }
             function buildUI () {
+
+                // Render overview blurb
+                if (person.overview) {
+                    document.getElementById("OVERVIEW").innerHTML = `<div class="alert alert-primary" role="alert">
+                        ${person.overview}
+                    </div>`
+                }
+
+                // Render Demographic Info
                 document.getElementById("NAME").innerHTML =  person.name ?? "🚨 Error 🚨";
                 
-                document.getElementById("BIRTH").innerHTML =  person.birth ? `🎂 ${person.birth}`: "";
+                if (!person.birth)
+                    document.getElementById("1").hidden = true;
+                document.getElementById("BIRTH").innerHTML =  person.birth ? `${person.birth}`: "";
                 document.getElementById("BLOC").innerHTML =  person.bloc ? `${person.bloc}`: "";
 
-                document.getElementById("DEATH").innerHTML =  person.death ? `🪦 ${person.death}`: "";
+                if (!person.death)
+                    document.getElementById("2").hidden = true;
+                document.getElementById("DEATH").innerHTML =  person.death ? `${person.death}`: "";
                 document.getElementById("DLOC").innerHTML =  person.dloc ? `${person.dloc}`: "";
 
-
-                document.getElementById("NAT").innerHTML =  person.nat ? `🇺🇸 ${person.nat}`: "";
+                if (!person.nat)
+                    document.getElementById("3").hidden = true;
+                document.getElementById("NAT").innerHTML =  person.nat ? `${person.nat}`: "";
                 document.getElementById("NLOC").innerHTML =  person.nloc ? `${person.nloc}`: "";
 
                 // Render the personal PDF
@@ -75,6 +100,7 @@
                     <embed src="./docs/${person.id}.pdf" type="application/pdf"/>
                 </object>`
 
+                // Render marriage docs (if any)
                 try {
                     var maybeSpouse =  "";
                     var marriage = "";
@@ -84,19 +110,16 @@
                         }
                     });
 
-                    console.log(maybeSpouse)
-
                     if (maybeSpouse == null || maybeSpouse == "" ) {
                         throw "No Spouse";
                     }
 
+                    // Heuristic to make sure we get the same folder for each partner.
                     if (person.gender === "male") {
                         marriage = `${maybeSpouse}${person.id}`;
                     } else {
                         marriage = `${person.id}${maybeSpouse}`;
                     }
-
-                    console.log(marriage);
 
                     // Render the Marriage PDF 
                     document.getElementById("MARRIAGE").innerHTML = `       
