@@ -20,17 +20,25 @@
     <div class=container>
         <h1 id="NAME"></h1>
         
-        <p id="BIRTH"></p>
-        <p id="DEATH"></p>
-        <p id="NAT"></p>
+        <p>
+        <span id="BIRTH"></span>
+        <span id="BLOC"></span>
+        </p>
+
+        <p>
+            <span id="DEATH"></span>
+            <span id="DLOC"></span>
+        </p>
+
+        <p>
+            <span id="NAT"></span>
+            <span id="NLOC"></span>
+        </p>
 
         <h2>Docs</h2>
-        <figure class="figure">
-            <img src="..." class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
-            <figcaption class="figure-caption">A caption for the above image.</figcaption>
-          </figure>
-
-
+            <object data="./docs/romeo.pdf" type="application/pdf" width="1000" height="1000">
+                <embed src="./docs/romeo.pdf" type="application/pdf"/>
+            </object>
     </div>
 
 
@@ -46,8 +54,15 @@
             document.getElementById("NAME").innerHTML =  person.name ?? "🚨 Error 🚨";
             
             document.getElementById("BIRTH").innerHTML =  person.birth ? `🎂 ${person.birth}`: "";
+            document.getElementById("BLOC").innerHTML =  person.bloc ? `${person.bloc}`: "";
+
             document.getElementById("DEATH").innerHTML =  person.death ? `🪦 ${person.death}`: "";
+            document.getElementById("DLOC").innerHTML =  person.dloc ? `${person.dloc}`: "";
+
+
             document.getElementById("NAT").innerHTML =  person.nat ? `🇺🇸 ${person.nat}`: "";
+            document.getElementById("NLOC").innerHTML =  person.nloc ? `${person.nloc}`: "";
+
 
         }
 
