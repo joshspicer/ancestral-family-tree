@@ -7,6 +7,7 @@
     "url": "https://github.com/justincy/d3-pedigree-examples.git"
   },
   "author": "",
+  "scripts": {"start": "npx live-server ."},
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/justincy/d3-pedigree-examples/issues"
