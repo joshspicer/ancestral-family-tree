@@ -238,7 +238,10 @@ function togglePerson(person){
 }
 
 function displayDetails (person) {
-  document.cookie = `person=${JSON.stringify(person, getCircularReplacer)}`
+  console.log(person);
+  document.cookie = `person=${JSON.stringify(person, getCircularReplacer())}`
+  document.location.href = "./bio.html"
+  
 }
 
 /**
