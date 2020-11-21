@@ -39,9 +39,15 @@ svg {
 }
 
 </style>
+<head>
+    <!-- Imports -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+</head>
 <body>
-<script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
-<script>
+
+  
+  <!-- d3 -->
+  <script>
 
 var data;
 
@@ -175,7 +181,9 @@ function draw(){
             togglePerson(d);
            // react on right-clicking
         })
-      .on('dblclick', displayDetails)
+      // .on('dblclick', displayDetails)
+      .on('click', displayDetails)
+
 
   // Draw the rectangle person boxes
   nodeEnter.append("rect")
@@ -281,3 +289,10 @@ function elbow(d) {
 }
 
 </script>
+
+<br>
+Click for more info on a person.<br>
+Right-click to hide branch.
+
+
+</body>
