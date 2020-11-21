@@ -1,3 +1,5 @@
-spicer*
+data/**
+!docs/example.json
 docs/**
 !docs/example.pdf
+imgs/**
