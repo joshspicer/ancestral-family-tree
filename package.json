@@ -1,20 +1,20 @@
 {
-  "name": "d3-pedigree-examples",
+  "name": "ancestral-family-tree",
   "version": "1.0.0",
-  "description": "Examples of how to create family pedigrees with D3.",
+  "description": "A family tree visualization and organizer.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/justincy/d3-pedigree-examples.git"
+    "url": "https://github.com/joshspicer/ancestral-family-tree.git"
   },
   "author": "",
   "scripts": {"start": "npx live-server ."},
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/justincy/d3-pedigree-examples/issues"
+    "url": "https://github.com/joshspicer/ancestral-family-tree/issues"
   },
-  "homepage": "https://github.com/justincy/d3-pedigree-examples",
+  "homepage": "https://github.com/joshspicer/ancestral-family-tree",
   "devDependencies": {
-    "chance": "0.7.5",
     "minimist": "1.1.1"
   }
 }
+  

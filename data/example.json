@@ -1,23 +1,23 @@
 {
-  "name": "Maude Fernandez",
+  "name": "Example",
   "birth": "1994-10-14",
-  "id": "06ada7cd-3078-54bc-bb87-72e9d6f38abf",
+  "id": "example",
   "_parents": [
     {
       "name": "Janie Norton",
-      "id": "a39bfa73-6617-5e8e-9470-d26b68787e52",
+      "id": "janie",
       "_parents": [
         {
           "name": "Pearl Cannon",
-          "id": "fc956046-a5c3-502f-b853-d669804d428f",
+          "id": "pearl",
           "_parents": [
             {
               "name": "Augusta Miller",
-              "id": "fa5b0c07-9000-5475-a90e-b76af7693a57"
+              "id": "augusta"
             },
             {
               "name": "Clayton Welch",
-              "id": "3194517d-1151-502e-a3b6-d1ae8234c647"
+              "id": "clayton"
             }
           ]
         },
