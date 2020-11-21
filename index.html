@@ -170,8 +170,8 @@ function draw(){
   // Add any new nodes
   var nodeEnter = node.enter().append("g")
       .attr("class", "person")
-      // .on('click', togglePerson);
-      .on('click', displayDetails)
+      // .on('click', togglePerson)
+      .on('dblclick', displayDetails)
 
   // Draw the rectangle person boxes
   nodeEnter.append("rect")
@@ -222,7 +222,8 @@ function draw(){
   link.exit().remove();
   
   // Update the links positions (old and new)
-  link.attr("d", elbow);
+  link.attr("d", elbow)
+    .on("mouseover", function(d) {console.log(d)} );
 }
 
 /**

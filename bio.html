@@ -36,9 +36,8 @@
         </p>
 
         <h2>Docs</h2>
-            <object data="./docs/romeo.pdf" type="application/pdf" width="1000" height="1000">
-                <embed src="./docs/romeo.pdf" type="application/pdf"/>
-            </object>
+            <span id="DOCS"></span>
+
     </div>
 
 
@@ -63,7 +62,10 @@
             document.getElementById("NAT").innerHTML =  person.nat ? `🇺🇸 ${person.nat}`: "";
             document.getElementById("NLOC").innerHTML =  person.nloc ? `${person.nloc}`: "";
 
-
+            // Render the PDF with Docs saved.
+            document.getElementById("DOCS").innerHTML = `            <object data="./docs/${person.id}.pdf" type="application/pdf" width="1000" height="1000">
+                <embed src="./docs/${person.id}.pdf" type="application/pdf"/>
+            </object>`
         }
 
         parseCookie ();
