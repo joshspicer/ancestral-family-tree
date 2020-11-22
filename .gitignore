@@ -1,5 +1,13 @@
 data/**
-!docs/example.json
+!data/example.json
+
 docs/**
 !docs/example.pdf
+
 imgs/**
+!imgs/example.png
+
+supporting-docs/**
+!supporting-docs/example.pdf
+
+.DS_Store

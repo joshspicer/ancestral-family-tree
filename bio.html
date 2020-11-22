@@ -24,11 +24,16 @@
   
     <nav class="navbar navbar-light bg-light">
         <a class="navbar-brand" href="../">&lt; Tree</a>
+        <a class="navbar-right">📓</a>
       </nav>
     <div class=container style="margin-top: 15px">
         <h1 id="NAME"></h1>
              
-        <span id="PHOTO"></span>
+        <div class="row">
+            <span id="PHOTO"></span>
+            <span id="PHOTO2"></span>
+        </div>
+
         <span id="OVERVIEW"></span>
 
         <h2>Demographics</h2>  
@@ -78,21 +83,23 @@
                     </div>` 
                 }
                 
-                // Photo if we got one
+                // Photo(s) if we got one(s)
                 document.getElementById("PHOTO").innerHTML = `<img src="./imgs/${person.id}.png" width="200px" > <br><br> `
+                document.getElementById("PHOTO2").innerHTML = `<img src="./imgs/${person.id}2.png" width="200px" > <br><br> `
+
                 
                 
-                if (!person.birth)
+                if (!person.birth && !person.bloc)
                     document.getElementById("1").hidden = true;
                 document.getElementById("BIRTH").innerHTML =  person.birth ? `${person.birth}`: "";
                 document.getElementById("BLOC").innerHTML =  person.bloc ? `${person.bloc}`: "";
 
-                if (!person.death)
+                if (!person.death && !person.dloc)
                     document.getElementById("2").hidden = true;
                 document.getElementById("DEATH").innerHTML =  person.death ? `${person.death}`: "";
                 document.getElementById("DLOC").innerHTML =  person.dloc ? `${person.dloc}`: "";
 
-                if (!person.nat)
+                if (!person.nat && !person.nloc)
                     document.getElementById("3").hidden = true;
                 document.getElementById("NAT").innerHTML =  person.nat ? `${person.nat}`: "";
                 document.getElementById("NLOC").innerHTML =  person.nloc ? `${person.nloc}`: "";
